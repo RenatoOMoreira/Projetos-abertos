@@ -1,0 +1,61 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Gerenciamento de tarefas</li>
+  </ol>
+</nav>
+<div class="container">
+  <!--INPUT DE TAREFAS-->  
+  <div class="card">
+    <h5 class="card-header">Adicionar/Atualizar tarefas</h5>
+    <div class="card-body">
+      <form id="add-form" #formulario="ngForm"(ngSubmit)="formulario.form.valid && save(formulario)">
+        <div class="form-group">
+          <label for="model">Tarefas</label>
+          <input
+          class="form-control" 
+          name="model"
+          type="text" [(ngModel)]="Tarefa.tarefa" 
+          id="model" 
+          #model="ngModel"
+          [ngClass]="{'is-invalid': formulario.submitted && model.invalid}" 
+          placeholder="Digite sua tarefa"
+          required
+          />
+          <div class="invalid-feedback" *ngIf="formulario.submitted && model.invalid">
+            <div *ngIf="model.errors?.['required']">
+              A tarefa é obrigatória.
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" >Salvar</button>
+        <button class="btn btn-secondary ml-1" type="reset" (click)="cleanForm(formulario)">Limpar</button>
+      </form>
+    </div>
+  </div>
+  <br/>
+<!--Lista de TAREFAS-->  
+  <div class="card">
+    <h5 class="card-header">Lista de tarefas</h5>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Tarefas</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tarefa of Tarefas">
+            <td>{{tarefa.id}}</td>
+            <td>{{tarefa.tarefa}}</td>
+            <td>
+              <button class="btn btn-outline-warning btn-sm" type="button" (click)="edit(tarefa)">Editar</button>
+              <button class="btn btn-outline-danger btn-sm ml-1"type="button" (click)="delete(tarefa)">Deletar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
